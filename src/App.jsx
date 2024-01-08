@@ -43,29 +43,34 @@ function App() {
 
     return (
         <>
-            {formData.map((data, i) => (
-                <div key={i}>
-                    <h1>{data.id}</h1>
-                    <CustomFormElement
-                        label={data.label}
-                        id={data.id}
-                        value={data.value}
-                        mode={data.mode}
-                        options={data.options}
-                        formData={formData}
-                        parentIndex={i}
-                        setFormData={setFormData}
-                    />
+            <div className="main-container">
+                <h1>Form</h1>
+                <div className="data-container">
+                    {formData.map((data, i) => (
+                        <div key={i} className="data">
+                            <p>{data.id}</p>
+                            <CustomFormElement
+                                label={data.label}
+                                id={data.id}
+                                value={data.value}
+                                mode={data.mode}
+                                options={data.options}
+                                parentIndex={i}
+                                setFormData={setFormData}
+                            />
+                        </div>
+                    ))}
                 </div>
-            ))}
-
-            <button onClick={() => setBtnClicked(true)}>Send</button>
-            {btnClicked && (
                 <div>
-                    <p>Thanks for filling up the form</p>
-                    {formData.map((data) => console.log(data.value))}
+                    <button onClick={() => setBtnClicked(true)}>Send</button>
                 </div>
-            )}
+                {btnClicked && (
+                    <div>
+                        <p>Thanks for filling up the form.</p>
+                        {formData.map((data) => console.log(data.value))}
+                    </div>
+                )}
+            </div>
         </>
     );
 }

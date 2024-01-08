@@ -1,15 +1,9 @@
-const handleChange = (e, formData, parentIndex, setFormData) => {
-    // console.log("e " + e);
-    // console.log("e.target.value " + e.target.value);
-    // console.log("formData " + formData);
-    // console.log("parentIndex " + parentIndex);
-
+const handleChange = (e, parentIndex, setFormData) => {
     setFormData((previuData) => {
         const newFormData = JSON.parse(JSON.stringify(previuData));
 
-        // console.log(newFormData[parentIndex]);
         let elementToModify = newFormData[parentIndex].value;
-        // console.log("elementToModify " + elementToModify);
+
         elementToModify = e.target.value;
 
         newFormData[parentIndex].value = elementToModify;
@@ -24,16 +18,13 @@ const CustomFormElement = ({
     value,
     mode,
     options,
-    formData,
     parentIndex,
     setFormData,
 }) => {
-    // console.log("formData ");
-    // console.log(JSON.parse(JSON.stringify(formData)));
     switch (mode) {
         case "checkbox":
             return (
-                <div>
+                <div className="option">
                     {options.map((option, i) => (
                         <label key={`option-check-${i}`}>
                             <input
@@ -42,12 +33,7 @@ const CustomFormElement = ({
                                 name={id}
                                 value={option}
                                 onChange={(e) =>
-                                    handleChange(
-                                        e,
-                                        formData,
-                                        parentIndex,
-                                        setFormData
-                                    )
+                                    handleChange(e, parentIndex, setFormData)
                                 }
                             />
                             {option}
@@ -60,13 +46,11 @@ const CustomFormElement = ({
             return (
                 <select
                     value={value}
-                    onChange={(e) =>
-                        handleChange(e, formData, parentIndex, setFormData)
-                    }
+                    onChange={(e) => handleChange(e, parentIndex, setFormData)}
                 >
                     {label}
-                    {options.map((option, i) => (
-                        <option key={`option-sel${i}`} value={option}>
+                    {options.map((option) => (
+                        <option key={`${id}${option}`} value={option}>
                             {option}
                         </option>
                     ))}
@@ -75,7 +59,7 @@ const CustomFormElement = ({
 
         case "radio":
             return (
-                <div>
+                <div className="option">
                     {options.map((option, i) => (
                         <label key={`radio-${i}`}>
                             <input
@@ -84,12 +68,7 @@ const CustomFormElement = ({
                                 name={id}
                                 value={option}
                                 onChange={(e) =>
-                                    handleChange(
-                                        e,
-                                        formData,
-                                        parentIndex,
-                                        setFormData
-                                    )
+                                    handleChange(e, parentIndex, setFormData)
                                 }
                             />
                             {option}
@@ -103,9 +82,7 @@ const CustomFormElement = ({
                 <input
                     type="text"
                     value={value}
-                    onChange={(e) =>
-                        handleChange(e, formData, parentIndex, setFormData)
-                    }
+                    onChange={(e) => handleChange(e, parentIndex, setFormData)}
                 />
             );
     }
